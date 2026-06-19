@@ -42,13 +42,25 @@ const TIMELINE = [
     ],
     tech: ['Network Design', 'Telecommunications', 'Wireshark'],
   },
+  {
+    company: 'BMS Hackathon',
+    role: 'Jury Member · Mobile Dev Track',
+    period: '2025',
+    location: 'Algeria',
+    color: '#B76E79',
+    bullets: [
+      'Served as jury member for the mobile development track',
+      'Evaluated student projects on technical merit, innovation, and UX quality',
+    ],
+    tech: ['Mobile Development', 'Flutter', 'React Native'],
+  },
 ]
 
 export function ExperiencePanel() {
   return (
     <div className="h-full overflow-y-auto px-2">
       <h2 className="font-display text-3xl font-light text-[#2D1B2E] mb-1">Experience</h2>
-      <p className="text-sm text-[#B76E79] mb-8">3 internships · team lead · AI & data focus</p>
+      <p className="text-sm text-[#B76E79] mb-8">3 internships · jury member · team lead · AI & data focus</p>
 
       <div className="relative">
         {/* Timeline line */}
