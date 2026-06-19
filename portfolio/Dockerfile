@@ -1,32 +1,30 @@
 # HuggingFace Space — AI Rayane Portfolio (Next.js)
-FROM node:20-alpine AS builder
+FROM node:20-slim
 
 WORKDIR /app
 
+# Install system deps for native modules
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
-RUN npm ci
+
+# Use install (not ci) for better compatibility
+RUN npm install
 
 COPY . .
 
-ARG BACKEND_URL
-ENV BACKEND_URL=${BACKEND_URL}
+# Remove old conflicting config
+RUN rm -f next.config.mjs
+
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 
-# Production image
-FROM node:20-alpine AS runner
-
-WORKDIR /app
-
 ENV NODE_ENV=production
 ENV PORT=7860
-ENV HOSTNAME=0.0.0.0
-
-# Copy standalone build output
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
 
 EXPOSE 7860
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
