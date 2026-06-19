@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rayane Toumi — AI Portfolio</title>
+  <link rel="stylesheet" href="static/css/style.css" />
+</head>
+<body>
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="avatar-ring">
+        <div class="avatar-initials">RT</div>
+      </div>
+      <h1>Rayane Toumi</h1>
+      <p class="tagline">AI &amp; Software Engineering Student · ENSIA · Algiers</p>
+      <p class="sub">ML · Full-Stack · Cybersecurity · 12+ projects</p>
+      <a href="#chat" class="cta-btn">
+        <span class="pulse-dot"></span>
+        Talk with AI Rayane
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Quick stats ───────────────────────────────────────── -->
+  <section class="stats-bar">
+    <div class="stat"><span class="stat-num">12+</span><span>Projects</span></div>
+    <div class="stat"><span class="stat-num">0.96</span><span>AUC-ROC (DermAI)</span></div>
+    <div class="stat"><span class="stat-num">3</span><span>Internships</span></div>
+    <div class="stat"><span class="stat-num">4th</span><span>Year @ ENSIA</span></div>
+  </section>
+
+  <!-- ── Chat widget ───────────────────────────────────────── -->
+  <section id="chat" class="chat-section">
+    <h2>Ask AI Rayane anything</h2>
+    <p class="chat-hint">About projects, skills, experience, or what it's like studying AI in Algeria.</p>
+
+    <div class="chat-container">
+      <div id="chat-messages" class="chat-messages">
+        <div class="message assistant">
+          <div class="bubble">
+            Hey! I'm AI Rayane — a digital twin of Rayane Toumi. Ask me about my projects, skills, or experience. What would you like to know?
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-row">
+        <input
+          id="chat-input"
+          type="text"
+          placeholder="e.g. Tell me about DermAI, or what's your strongest skill?"
+          autocomplete="off"
+        />
+        <button id="send-btn" onclick="sendMessage()">Send</button>
+      </div>
+
+      <p class="chat-disclaimer">
+        AI Rayane only answers from verified context. For anything else:
+        <a href="mailto:rayanerayane290905@gmail.com">rayanerayane290905@gmail.com</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────────────── -->
+  <footer>
+    <a href="https://github.com/rayaaneeee" target="_blank">GitHub</a>
+    <a href="https://huggingface.co/rytaaaaaaa" target="_blank">HuggingFace</a>
+    <a href="mailto:rayanerayane290905@gmail.com">Email</a>
+  </footer>
+
+  <script src="static/js/chat.js"></script>
+</body>
+</html>

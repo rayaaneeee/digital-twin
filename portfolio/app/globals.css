@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --pink-primary: #FF4FA2;
+  --pink-blush: #FFD6EA;
+  --pink-soft: #FF85C2;
+  --rose-gold: #B76E79;
+  --cream: #FFF8F0;
+  --white: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(ellipse 120% 80% at 50% 0%, #FFE8F4 0%, #FFF4FA 35%, #FFFFFF 70%);
+  min-height: 100vh;
+  color: #2D1B2E;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Glassmorphism base */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 79, 162, 0.15);
+}
+
+.glass-pink {
+  background: rgba(255, 214, 234, 0.35);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 79, 162, 0.25);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 79, 162, 0.2);
+}
+
+/* Shimmer text */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #FF4FA2 0%,
+    #B76E79 25%,
+    #FF85C2 50%,
+    #B76E79 75%,
+    #FF4FA2 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Holographic ring animation */
+@keyframes holo-spin {
+  from { transform: rotate(0deg) rotateX(60deg); }
+  to { transform: rotate(360deg) rotateX(60deg); }
+}
+
+@keyframes holo-spin-2 {
+  from { transform: rotate(0deg) rotateX(70deg) rotateY(20deg); }
+  to { transform: rotate(-360deg) rotateX(70deg) rotateY(20deg); }
+}
+
+/* Scan line */
+@keyframes scan {
+  0% { top: 10%; opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% { top: 90%; opacity: 0; }
+}
+
+/* Particle float */
+@keyframes particle-drift {
+  0% { transform: translate(0, 0) scale(1); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0.5); opacity: 0; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 79, 162, 0.3); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 79, 162, 0.6); }
+
+/* Selection */
+::selection {
+  background: rgba(255, 79, 162, 0.2);
+  color: #2D1B2E;
+}
+
+/* Hide default cursor */
+* { cursor: none !important; }
