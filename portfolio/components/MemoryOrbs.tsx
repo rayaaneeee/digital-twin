@@ -31,7 +31,7 @@ const ORBS = [
     color: '#FF85C2',
     glow: 'rgba(255,133,194,0.5)',
     x: 0,
-    y: -220,
+    y: -280,
     delay: 0.2,
   },
   {
