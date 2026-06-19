@@ -73,10 +73,10 @@ export function HologramAvatar({ speaking = false, onTalk }: Props) {
   return (
     <div className="relative flex items-center justify-center select-none">
       {/* Ambient glow */}
-      <div className="absolute w-80 h-80 rounded-full bg-[#FF4FA2]/10 blur-[70px] animate-breathe" />
+      <div className="absolute w-96 h-96 rounded-full bg-[#FF4FA2]/10 blur-[80px] animate-breathe" />
 
       {/* Holographic rings */}
-      {[280, 240, 200].map((size, i) => (
+      {[370, 320, 270].map((size, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full border border-[#FF4FA2]"
@@ -93,25 +93,25 @@ export function HologramAvatar({ speaking = false, onTalk }: Props) {
       {/* Spinning dashed arc */}
       <motion.div
         className="absolute"
-        style={{ width: 320, height: 320 }}
+        style={{ width: 410, height: 410 }}
         animate={{ rotate: 360 }}
         transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
       >
-        <svg viewBox="0 0 320 320" className="w-full h-full">
+        <svg viewBox="0 0 410 410" className="w-full h-full">
           <circle
-            cx="160" cy="160" r="158"
+            cx="205" cy="205" r="203"
             stroke="#FF4FA2" strokeWidth="1" fill="none"
             strokeDasharray="8 18"
             opacity="0.25"
           />
-          <circle cx="160" cy="4" r="5" fill="#FF4FA2" opacity="0.7" />
+          <circle cx="205" cy="4" r="5" fill="#FF4FA2" opacity="0.7" />
         </svg>
       </motion.div>
 
       {/* Inner pulse ring */}
       <motion.div
         className="absolute rounded-full border-2 border-[#FF85C2]/25"
-        style={{ width: 175, height: 175 }}
+        style={{ width: 230, height: 230 }}
         animate={{ scale: [1, 1.18, 1], opacity: [0.4, 0.1, 0.4] }}
         transition={{ duration: 3.5, repeat: Infinity }}
       />
@@ -120,7 +120,7 @@ export function HologramAvatar({ speaking = false, onTalk }: Props) {
       {speaking && (
         <motion.div
           className="absolute rounded-full border-2 border-[#FF4FA2]/50"
-          style={{ width: 210, height: 210 }}
+          style={{ width: 280, height: 280 }}
           animate={{ scale: [1, 1.12, 1], opacity: [0.6, 0.2, 0.6] }}
           transition={{ duration: 0.8, repeat: Infinity }}
         />
@@ -129,7 +129,7 @@ export function HologramAvatar({ speaking = false, onTalk }: Props) {
       {/* Avatar image */}
       <motion.div
         className="relative z-10 overflow-hidden rounded-full"
-        style={{ width: 220, height: 220 }}
+        style={{ width: 300, height: 300 }}
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
       >
