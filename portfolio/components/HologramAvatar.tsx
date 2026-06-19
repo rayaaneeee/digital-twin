@@ -201,20 +201,22 @@ export function HologramAvatar({ speaking = false, onTalk }: Props) {
       </div>
 
       {/* Talk button */}
-      <motion.button
-        data-hover="true"
-        onClick={onTalk}
-        className="absolute -bottom-16 left-1/2 -translate-x-1/2 flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium text-sm whitespace-nowrap"
-        style={{
-          background: 'linear-gradient(135deg, #FF4FA2, #FF85C2)',
-          boxShadow: '0 8px 32px rgba(255,79,162,0.4)',
-        }}
-        whileHover={{ scale: 1.05, boxShadow: '0 12px 40px rgba(255,79,162,0.6)' }}
-        whileTap={{ scale: 0.97 }}
-      >
-        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-        Talk to AI Rayane
-      </motion.button>
+      <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
+        <motion.button
+          data-hover="true"
+          onClick={onTalk}
+          className="flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium text-sm whitespace-nowrap"
+          style={{
+            background: 'linear-gradient(135deg, #FF4FA2, #FF85C2)',
+            boxShadow: '0 8px 32px rgba(255,79,162,0.4)',
+          }}
+          whileHover={{ scale: 1.05, boxShadow: '0 12px 40px rgba(255,79,162,0.6)' }}
+          whileTap={{ scale: 0.97 }}
+        >
+          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+          Talk to AI Rayane
+        </motion.button>
+      </div>
     </div>
   )
 }
