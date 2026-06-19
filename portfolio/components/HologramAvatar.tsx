@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { avatarDataUrl } from './avatarData'
 
 interface Props {
   speaking?: boolean
@@ -134,7 +135,7 @@ export function HologramAvatar({ speaking = false, onTalk }: Props) {
       >
         {/* Avatar photo */}
         <img
-          src="/avatar.png"
+          src={avatarDataUrl}
           alt="AI Rayane avatar"
           className="w-full h-full object-cover"
           style={{ objectPosition: 'center 15%', filter: 'brightness(1.08) contrast(1.02)' }}
