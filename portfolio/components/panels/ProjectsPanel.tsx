@@ -74,6 +74,7 @@ const PROJECTS = [
     description: 'End-to-end platform extracting structured B2B data from 12,000+ exhibitor records using Google Cloud Vision + Claude AI for NLP parsing. Built as team lead at Temacina.',
     tech: ['Google Cloud Vision', 'Claude API', 'Transformers', 'Django', 'Vue.js'],
     metrics: [{ label: 'Records', value: '12K+' }, { label: 'Team', value: '5 people' }],
+    link: 'https://github.com/rayaaneeee/temacina-project',
     color: '#FF85C2',
   },
   {
