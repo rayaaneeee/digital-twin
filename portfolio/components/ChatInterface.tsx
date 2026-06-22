@@ -70,7 +70,7 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
           msgs[msgs.length - 1] = {
             role: 'assistant',
             content: res.status === 503
-              ? "My backend isn't running yet! Start it with: `cd digital-twin/backend && uvicorn main:app --port 8000` — then I'll be fully operational 🚀"
+              ? "I'm temporarily unavailable — please try again in a moment 🚀"
               : res.status === 429
               ? "You're sending messages too fast! Give me a moment to breathe ✨"
               : "Something went wrong on my end. Try again in a moment!",
@@ -114,7 +114,7 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
         const msgs = [...prev]
         msgs[msgs.length - 1] = {
           role: 'assistant',
-          content: 'Connection issue — make sure the backend is running (`uvicorn main:app --port 8000` in the backend folder).',
+          content: 'Connection issue — please try again in a moment.',
         }
         return msgs
       })
@@ -130,8 +130,7 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 60, scale: 0.95 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed bottom-6 right-6 z-50 flex flex-col"
-      style={{ width: 420, height: 580 }}
+      className="fixed inset-0 md:inset-auto md:bottom-6 md:right-6 z-50 flex flex-col md:w-[420px] md:h-[580px]"
     >
       <div className="flex flex-col h-full rounded-3xl overflow-hidden shadow-2xl"
         style={{

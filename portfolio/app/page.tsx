@@ -144,13 +144,13 @@ export default function Home() {
             <p className="text-xs text-[#B76E79] -mt-0.5">AI · ENSIA · Algiers</p>
           </div>
 
-          <nav className="flex items-center gap-3">
+          <nav className="flex items-center gap-1 md:gap-3">
             <a
               href="https://github.com/rayaaneeee"
               target="_blank"
               rel="noopener noreferrer"
               data-hover="true"
-              className="text-xs text-[#B76E79] hover:text-[#FF4FA2] transition-colors px-3 py-1.5 rounded-full hover:bg-[#FF4FA2]/8"
+              className="text-xs text-[#B76E79] hover:text-[#FF4FA2] transition-colors px-2 md:px-3 py-1.5 rounded-full hover:bg-[#FF4FA2]/8"
             >
               GitHub ↗
             </a>
@@ -159,7 +159,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               data-hover="true"
-              className="text-xs text-[#B76E79] hover:text-[#FF4FA2] transition-colors px-3 py-1.5 rounded-full hover:bg-[#FF4FA2]/8"
+              className="hidden sm:inline-flex text-xs text-[#B76E79] hover:text-[#FF4FA2] transition-colors px-3 py-1.5 rounded-full hover:bg-[#FF4FA2]/8"
             >
               in LinkedIn ↗
             </a>
@@ -168,7 +168,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               data-hover="true"
-              className="text-xs text-[#B76E79] hover:text-[#FF4FA2] transition-colors px-3 py-1.5 rounded-full hover:bg-[#FF4FA2]/8"
+              className="hidden sm:inline-flex text-xs text-[#B76E79] hover:text-[#FF4FA2] transition-colors px-3 py-1.5 rounded-full hover:bg-[#FF4FA2]/8"
             >
               🤗 HuggingFace ↗
             </a>
@@ -177,13 +177,13 @@ export default function Home() {
               onClick={() => setChatOpen(true)}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              className="text-xs px-4 py-2 rounded-full text-white font-medium"
+              className="text-xs px-3 md:px-4 py-2 rounded-full text-white font-medium"
               style={{
                 background: 'linear-gradient(135deg, #FF4FA2, #FF85C2)',
                 boxShadow: '0 4px 16px rgba(255,79,162,0.3)',
               }}
             >
-              Talk to AI Rayane
+              <span className="hidden sm:inline">Talk to </span>AI Rayane
             </motion.button>
           </nav>
         </motion.header>
@@ -201,20 +201,22 @@ export default function Home() {
             transition={{ delay: 2.6, duration: 0.8, type: 'spring' }}
             className="relative z-10 flex flex-col items-center"
           >
-            <HologramAvatar
-              speaking={speaking}
-              onTalk={() => setChatOpen(true)}
-            />
+            <div className="scale-[0.62] sm:scale-[0.8] md:scale-100 origin-center">
+              <HologramAvatar
+                speaking={speaking}
+                onTalk={() => setChatOpen(true)}
+              />
+            </div>
 
             {/* Name + tagline below avatar */}
             <motion.div
-              className="mt-20 text-center"
+              className="mt-4 md:mt-20 text-center px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
               transition={{ delay: 3.0 }}
             >
               <h1
-                className="font-display text-5xl font-light mb-2"
+                className="font-display text-3xl md:text-5xl font-light mb-2"
                 style={{
                   background: 'linear-gradient(135deg, #FF4FA2, #B76E79)',
                   WebkitBackgroundClip: 'text',
@@ -258,30 +260,35 @@ export default function Home() {
                 onClick={() => setActivePanel(null)}
               />
 
-              {/* Panel */}
+              {/* Panel — bottom sheet on mobile, left drawer on desktop */}
               <motion.div
-                className="fixed left-6 top-20 bottom-6 z-40 w-96 rounded-3xl overflow-hidden"
+                className="fixed inset-x-0 bottom-0 top-[15vh] z-40 rounded-t-3xl md:inset-x-auto md:bottom-6 md:left-6 md:top-20 md:w-96 md:rounded-3xl overflow-hidden"
                 style={{
                   background: 'rgba(255,255,255,0.88)',
                   backdropFilter: 'blur(40px)',
                   border: '1px solid rgba(255,79,162,0.2)',
                   boxShadow: '0 32px 80px rgba(255,79,162,0.15)',
                 }}
-                initial={{ x: -420, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -420, opacity: 0 }}
+                initial={{ y: '100%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: '100%', opacity: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
+                {/* Drag handle (mobile) */}
+                <div className="md:hidden flex justify-center pt-3 pb-1">
+                  <div className="w-10 h-1 rounded-full bg-[#FF4FA2]/30" />
+                </div>
+
                 {/* Close button */}
                 <button
                   data-hover="true"
                   onClick={() => setActivePanel(null)}
-                  className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center text-[#B76E79] hover:bg-[#FF4FA2]/10 transition-colors text-sm"
+                  className="absolute top-3 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center text-[#B76E79] hover:bg-[#FF4FA2]/10 transition-colors text-sm"
                 >
                   ✕
                 </button>
 
-                <div className="h-full overflow-hidden p-6 pt-5">
+                <div className="h-full overflow-hidden p-6 pt-3">
                   <ActivePanel />
                 </div>
               </motion.div>
@@ -302,7 +309,7 @@ export default function Home() {
 
       {/* Stats ribbon — bottom of page */}
       <motion.div
-        className="fixed bottom-0 left-0 right-0 z-20 flex justify-center gap-8 px-8 py-4 pointer-events-none"
+        className="fixed bottom-0 left-0 right-0 z-20 flex justify-center gap-4 md:gap-8 px-4 md:px-8 py-3 md:py-4 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 3.5 }}
