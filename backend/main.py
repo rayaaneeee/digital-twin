@@ -35,13 +35,21 @@ app.add_middleware(
 )
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
-MODEL = "llama-3.1-8b-instant"   # free, fast, smart
+# Use the 70B model — much better instruction following, still free on Groq
+MODEL = "llama-3.3-70b-versatile"
 MAX_TOKENS = 800
 
 # --- Rate limiting (in-memory, per IP) ---
 RATE_LIMIT = 30
 RATE_WINDOW = 60 * 60
 _rate_store: dict[str, list[float]] = defaultdict(list)
+
+# Fallback phrases when no context is found — bypass LLM entirely
+NO_CONTEXT_REPLY = {
+    "en": "I don't have that information here — feel free to email rayanerayane290905@gmail.com",
+    "fr": "Je n'ai pas cette information ici — vous pouvez écrire à rayanerayane290905@gmail.com",
+    "ar": "ليس لديّ هذه المعلومات هنا — يمكنك التواصل عبر البريد الإلكتروني rayanerayane290905@gmail.com",
+}
 
 
 def check_rate_limit(ip: str):
@@ -70,6 +78,15 @@ class ChatRequest(BaseModel):
         return self.lang if self.lang in ("en", "fr", "ar") else "en"
 
 
+async def stream_text(text: str) -> AsyncGenerator[str, None]:
+    """Stream a fixed string token-by-token (for no-context fallback)."""
+    words = text.split(" ")
+    for i, word in enumerate(words):
+        token = word if i == 0 else " " + word
+        yield f"data: {json.dumps({'text': token})}\n\n"
+    yield "data: [DONE]\n\n"
+
+
 async def stream_response(system_prompt: str, messages: list[dict]) -> AsyncGenerator[str, None]:
     stream = client.chat.completions.create(
         model=MODEL,
@@ -90,12 +107,23 @@ async def chat(req: ChatRequest, request: Request):
     check_rate_limit(ip)
 
     message = req.validate_message()
+    lang = req.validated_lang()
 
     context = retrieve(message)
+
+    # Hard guardrail: if RAG finds no factual context, skip the LLM entirely
+    if not context["factual"]:
+        fallback = NO_CONTEXT_REPLY[lang]
+        return StreamingResponse(
+            stream_text(fallback),
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+        )
+
     system_prompt = build_system_prompt(
         factual_chunks=context["factual"],
         style_samples=context["style"],
-        lang=req.validated_lang(),
+        lang=lang,
     )
 
     history = req.history[-10:]
