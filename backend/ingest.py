@@ -17,6 +17,7 @@ from chromadb.config import Settings
 CORPUS_DIR = Path(__file__).parent / "corpus"
 CHROMA_DIR = Path(__file__).parent / "chroma_db"
 COLLECTION_NAME = "rayane_twin"
+EMBED_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"  # 50+ languages incl. AR/FR
 
 CHUNK_SIZE = 400      # tokens (approx chars / 4)
 CHUNK_OVERLAP = 80
@@ -62,8 +63,8 @@ def build_index():
             ids.append(chunk_id)
     print(f"  {len(chunks)} chunks total")
 
-    print("Loading embedding model (bge-small-en-v1.5)...")
-    model = SentenceTransformer("BAAI/bge-small-en-v1.5")
+    print(f"Loading embedding model ({EMBED_MODEL})...")
+    model = SentenceTransformer(EMBED_MODEL)
 
     print("Embedding...")
     embeddings = model.encode(chunks, show_progress_bar=True, batch_size=64).tolist()

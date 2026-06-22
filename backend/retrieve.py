@@ -14,9 +14,12 @@ COLLECTION_NAME = "rayane_twin"
 TOP_K = 6
 
 
+EMBED_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
+
+
 @lru_cache(maxsize=1)
 def _load_resources():
-    model = SentenceTransformer("BAAI/bge-small-en-v1.5")
+    model = SentenceTransformer(EMBED_MODEL)
     client = chromadb.PersistentClient(path=str(CHROMA_DIR))
     collection = client.get_collection(COLLECTION_NAME)
     return model, collection
