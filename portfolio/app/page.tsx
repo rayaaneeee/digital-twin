@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HologramAvatar } from '@/components/HologramAvatar'
-import { MemoryOrbs } from '@/components/MemoryOrbs'
+import { MemoryOrbs, MemoryOrbsMobile } from '@/components/MemoryOrbs'
 import { ChatInterface } from '@/components/ChatInterface'
 import { ProjectsPanel } from '@/components/panels/ProjectsPanel'
 import { ExperiencePanel } from '@/components/panels/ExperiencePanel'
@@ -191,8 +191,10 @@ export default function Home() {
         {/* Hero stage — center */}
         <div className="relative flex-1 flex items-center justify-center min-h-screen">
 
-          {/* Memory orbs */}
-          <MemoryOrbs activePanel={activePanel} onSelect={setActivePanel} />
+          {/* Memory orbs — desktop overlay only */}
+          <div className="hidden md:contents">
+            <MemoryOrbs activePanel={activePanel} onSelect={setActivePanel} />
+          </div>
 
           {/* Avatar */}
           <motion.div
@@ -233,6 +235,11 @@ export default function Home() {
                 ML · Full-Stack · Cybersecurity · 12+ projects
               </p>
             </motion.div>
+
+            {/* Mobile orbs — inline below name, hidden on desktop */}
+            <div className="md:hidden">
+              <MemoryOrbsMobile activePanel={activePanel} onSelect={setActivePanel} />
+            </div>
           </motion.div>
 
           {/* Orb hint */}
