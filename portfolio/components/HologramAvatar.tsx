@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { avatarDataUrl } from './avatarData'
+import { useTranslation } from '@/contexts/LanguageContext'
 
 interface Props {
   speaking?: boolean
@@ -53,6 +54,7 @@ function AvatarFallback({ speaking, blinking }: { speaking: boolean; blinking: b
 
 export function HologramAvatar({ speaking = false, onTalk }: Props) {
   const [shimmer, setShimmer] = useState(false)
+  const { t } = useTranslation()
 
   // Occasional holographic shimmer pulse
   useEffect(() => {
@@ -214,7 +216,7 @@ export function HologramAvatar({ speaking = false, onTalk }: Props) {
           whileTap={{ scale: 0.97 }}
         >
           <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-          Talk to AI Rayane
+          {t.talkButton}
         </motion.button>
       </div>
     </div>
