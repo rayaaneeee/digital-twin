@@ -14,7 +14,7 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 from chromadb.config import Settings
 
-CORPUS_DIR = Path(__file__).parent.parent / "corpus"
+CORPUS_DIR = Path(__file__).parent / "corpus"
 CHROMA_DIR = Path(__file__).parent / "chroma_db"
 COLLECTION_NAME = "rayane_twin"
 
