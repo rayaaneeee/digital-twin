@@ -56,6 +56,7 @@ def check_rate_limit(ip: str):
 class ChatRequest(BaseModel):
     message: str
     history: list[dict] = []
+    lang: str = "en"
 
     def validate_message(self) -> str:
         msg = self.message.strip()
@@ -64,6 +65,9 @@ class ChatRequest(BaseModel):
         if len(msg) > 2000:
             raise HTTPException(status_code=400, detail="Message too long.")
         return msg
+
+    def validated_lang(self) -> str:
+        return self.lang if self.lang in ("en", "fr", "ar") else "en"
 
 
 async def stream_response(system_prompt: str, messages: list[dict]) -> AsyncGenerator[str, None]:
@@ -91,6 +95,7 @@ async def chat(req: ChatRequest, request: Request):
     system_prompt = build_system_prompt(
         factual_chunks=context["factual"],
         style_samples=context["style"],
+        lang=req.validated_lang(),
     )
 
     history = req.history[-10:]

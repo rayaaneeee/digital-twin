@@ -34,8 +34,17 @@ FACTUAL_INJECTION = """
 """
 
 
-def build_system_prompt(factual_chunks: list[str], style_samples: list[str]) -> str:
+LANGUAGE_INSTRUCTION = {
+    "fr": "\n\n## Language\nYou MUST respond entirely in French. Write naturally in French, including all explanations, greetings, and technical context. Keep proper nouns, project names, and technical terms (e.g. DermAI, FastAPI, PyTorch) in English.",
+    "ar": "\n\n## Language\nYou MUST respond entirely in Arabic (Modern Standard Arabic / العربية الفصحى). Write naturally in Arabic, including all explanations, greetings, and technical context. Keep project names and technical terms (e.g. DermAI, FastAPI, PyTorch) in English/Latin script. Write right-to-left as appropriate.",
+}
+
+
+def build_system_prompt(factual_chunks: list[str], style_samples: list[str], lang: str = "en") -> str:
     prompt = PERSONA_CORE
+
+    if lang in LANGUAGE_INSTRUCTION:
+        prompt += LANGUAGE_INSTRUCTION[lang]
 
     if style_samples:
         samples_text = "\n\n---\n\n".join(style_samples)

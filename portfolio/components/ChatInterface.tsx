@@ -15,7 +15,7 @@ interface Props {
 }
 
 export function ChatInterface({ onClose, onSpeaking }: Props) {
-  const { t } = useTranslation()
+  const { t, lang } = useTranslation()
 
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: t.chatIntro },
@@ -53,6 +53,7 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
         body: JSON.stringify({
           message: text,
           history: historyRef.current.slice(-8),
+          lang,
         }),
       })
 
