@@ -22,11 +22,16 @@ from persona import build_system_prompt
 
 app = FastAPI(title="AI Rayane — Digital Twin")
 
+ALLOWED_ORIGINS = [
+    "https://rytaaaaaaa-ai-rayane-portfolio.hf.space",
+    "http://localhost:3000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["POST", "GET"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type"],
 )
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
@@ -52,6 +57,14 @@ class ChatRequest(BaseModel):
     message: str
     history: list[dict] = []
 
+    def validate_message(self) -> str:
+        msg = self.message.strip()
+        if not msg:
+            raise HTTPException(status_code=400, detail="Empty message.")
+        if len(msg) > 2000:
+            raise HTTPException(status_code=400, detail="Message too long.")
+        return msg
+
 
 async def stream_response(system_prompt: str, messages: list[dict]) -> AsyncGenerator[str, None]:
     stream = client.chat.completions.create(
@@ -72,17 +85,16 @@ async def chat(req: ChatRequest, request: Request):
     ip = request.client.host if request.client else "unknown"
     check_rate_limit(ip)
 
-    if not req.message.strip():
-        raise HTTPException(status_code=400, detail="Empty message.")
+    message = req.validate_message()
 
-    context = retrieve(req.message)
+    context = retrieve(message)
     system_prompt = build_system_prompt(
         factual_chunks=context["factual"],
         style_samples=context["style"],
     )
 
     history = req.history[-10:]
-    messages = history + [{"role": "user", "content": req.message}]
+    messages = history + [{"role": "user", "content": message}]
 
     return StreamingResponse(
         stream_response(system_prompt, messages),
