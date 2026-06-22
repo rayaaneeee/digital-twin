@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/contexts/LanguageContext'
 
 const CERTS = [
   { name: 'Deep Learning & Robotics', org: 'University of Constantine 1', year: '2024', emoji: '🤖' },
@@ -18,12 +19,13 @@ const COURSES = [
 ]
 
 export function EducationPanel() {
+  const { t } = useTranslation()
+
   return (
     <div className="h-full overflow-y-auto px-2">
-      <h2 className="font-display text-3xl font-light text-[#2D1B2E] mb-1">Education</h2>
-      <p className="text-sm text-[#B76E79] mb-6">4th year · expected 2027</p>
+      <h2 className="font-display text-3xl font-light text-[#2D1B2E] mb-1">{t.educationTitle}</h2>
+      <p className="text-sm text-[#B76E79] mb-6">{t.educationSub}</p>
 
-      {/* Main education card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -41,20 +43,17 @@ export function EducationPanel() {
           Computer Science · Artificial Intelligence track
         </p>
         <p className="text-sm text-[#4A3040]">
-          Algeria's premier AI school. 4th-year student building at the intersection of
-          machine learning, systems, and creative problem solving.
+          {t.educationSchoolDesc}
         </p>
 
-        {/* BAC badge */}
         <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full"
           style={{ background: 'rgba(255,79,162,0.1)', border: '1px solid rgba(255,79,162,0.2)' }}>
           <span>🌟</span>
-          <span className="text-xs font-medium text-[#FF4FA2]">Baccalaureate · Science · Honors: Excellent</span>
+          <span className="text-xs font-medium text-[#FF4FA2]">{t.educationBac}</span>
         </div>
 
-        {/* Coursework */}
         <div className="mt-4">
-          <p className="text-xs text-[#B76E79] font-medium mb-2">Relevant coursework</p>
+          <p className="text-xs text-[#B76E79] font-medium mb-2">{t.educationCoursework}</p>
           <div className="flex flex-wrap gap-1.5">
             {COURSES.map((c) => (
               <span key={c} className="text-[11px] px-2.5 py-1 rounded-full bg-white/70 text-[#4A3040]"
@@ -66,8 +65,7 @@ export function EducationPanel() {
         </div>
       </motion.div>
 
-      {/* Certifications */}
-      <h3 className="text-sm font-semibold text-[#2D1B2E] mb-3">Certifications & Awards</h3>
+      <h3 className="text-sm font-semibold text-[#2D1B2E] mb-3">{t.educationCerts}</h3>
       <div className="space-y-3">
         {CERTS.map((cert, i) => (
           <motion.div

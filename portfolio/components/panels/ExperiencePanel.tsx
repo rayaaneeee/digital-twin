@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/contexts/LanguageContext'
 
 const TIMELINE = [
   {
@@ -9,13 +10,8 @@ const TIMELINE = [
     period: 'Feb – Jun 2026',
     location: 'Algiers',
     color: '#FF4FA2',
-    bullets: [
-      'Led 5-person team building an end-to-end OCR & NLP data extraction platform',
-      'Extracted structured data from 12,000+ exhibitor records with Google Cloud Vision + Claude AI',
-      'Shipped analytics dashboard — Django backend, Vue.js frontend',
-      'Ran sprint planning, task delegation, and code review for the team',
-    ],
     tech: ['Google Cloud Vision', 'Claude API', 'Transformers', 'Django', 'Vue.js'],
+    bulletIndex: 0,
   },
   {
     company: 'Algérie Poste',
@@ -23,12 +19,8 @@ const TIMELINE = [
     period: 'Dec 2025 – Feb 2026',
     location: 'Algiers',
     color: '#B76E79',
-    bullets: [
-      'Applied classification, clustering, anomaly detection, and association rule mining on HR data',
-      'Built models for candidate acceptance prediction and intelligent department assignment',
-      'Benchmarked SVM, Random Forests, Decision Trees, and Gradient Boosting',
-    ],
     tech: ['Python', 'SVM', 'Random Forest', 'Scikit-learn', 'XGBoost'],
+    bulletIndex: 1,
   },
   {
     company: 'Algérie Télécom',
@@ -36,11 +28,8 @@ const TIMELINE = [
     period: 'Jul – Aug 2025',
     location: 'Constantine',
     color: '#FF85C2',
-    bullets: [
-      'Contributed to architecture design of the Multi-Service Network',
-      'Hands-on experience in network core maintenance and telecom infrastructure',
-    ],
     tech: ['Network Design', 'Telecommunications', 'Wireshark'],
+    bulletIndex: 2,
   },
   {
     company: 'BMS Hackathon',
@@ -48,22 +37,21 @@ const TIMELINE = [
     period: '2025',
     location: 'Algeria',
     color: '#B76E79',
-    bullets: [
-      'Served as jury member for the mobile development track',
-      'Evaluated student projects on technical merit, innovation, and UX quality',
-    ],
     tech: ['Mobile Development', 'Flutter', 'React Native'],
+    bulletIndex: 3,
   },
 ]
 
 export function ExperiencePanel() {
+  const { t } = useTranslation()
+  const allBullets = t.experienceBullets as string[][]
+
   return (
     <div className="h-full overflow-y-auto px-2">
-      <h2 className="font-display text-3xl font-light text-[#2D1B2E] mb-1">Experience</h2>
-      <p className="text-sm text-[#B76E79] mb-8">3 internships · jury member · team lead · AI & data focus</p>
+      <h2 className="font-display text-3xl font-light text-[#2D1B2E] mb-1">{t.experienceTitle}</h2>
+      <p className="text-sm text-[#B76E79] mb-8">{t.experienceSub}</p>
 
       <div className="relative">
-        {/* Timeline line */}
         <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-[#FF4FA2] via-[#B76E79] to-[#FF85C2] opacity-30" />
 
         <div className="flex flex-col gap-8">
@@ -75,7 +63,6 @@ export function ExperiencePanel() {
               transition={{ delay: i * 0.15, type: 'spring', stiffness: 200 }}
               className="relative pl-14"
             >
-              {/* Dot */}
               <motion.div
                 className="absolute left-3 top-1 w-4 h-4 rounded-full border-2 border-white"
                 style={{ background: item.color, boxShadow: `0 0 12px ${item.color}60` }}
@@ -84,7 +71,6 @@ export function ExperiencePanel() {
                 transition={{ delay: i * 0.15 + 0.2, type: 'spring' }}
               />
 
-              {/* Card */}
               <div className="rounded-2xl p-5"
                 style={{
                   background: 'rgba(255,255,255,0.7)',
@@ -103,7 +89,7 @@ export function ExperiencePanel() {
                 </div>
 
                 <ul className="mt-3 space-y-1.5">
-                  {item.bullets.map((b, j) => (
+                  {(allBullets[item.bulletIndex] ?? []).map((b, j) => (
                     <li key={j} className="text-sm text-[#4A3040] flex gap-2">
                       <span style={{ color: item.color }} className="flex-shrink-0 mt-0.5">▸</span>
                       {b}
@@ -112,10 +98,10 @@ export function ExperiencePanel() {
                 </ul>
 
                 <div className="flex flex-wrap gap-1.5 mt-4">
-                  {item.tech.map((t) => (
-                    <span key={t} className="text-[10px] px-2 py-0.5 rounded-full"
+                  {item.tech.map((tech) => (
+                    <span key={tech} className="text-[10px] px-2 py-0.5 rounded-full"
                       style={{ background: `${item.color}15`, color: item.color, border: `1px solid ${item.color}30` }}>
-                      {t}
+                      {tech}
                     </span>
                   ))}
                 </div>
@@ -138,8 +124,7 @@ export function ExperiencePanel() {
               <p className="text-sm font-medium text-[#FF4FA2]">4th-Year AI & Computer Science</p>
               <p className="text-xs text-[#B76E79] mt-0.5">2023 – 2027 · Algiers, Algeria</p>
               <p className="text-sm text-[#4A3040] mt-2">
-                National Higher School of Artificial Intelligence — top AI school in Algeria.
-                Coursework: ML, Deep Learning, Data Mining, Time Series, OR, Network Security, Databases.
+                {t.experienceEducationDesc}
               </p>
             </div>
           </motion.div>

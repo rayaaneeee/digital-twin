@@ -1,25 +1,24 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/contexts/LanguageContext'
 
-const ORBS = [
-  { id: 'projects',   label: 'Projects',    emoji: '🚀', color: '#FF4FA2', glow: 'rgba(255,79,162,0.5)',   x: -280, y: -80,  delay: 0   },
-  { id: 'experience', label: 'Experience',  emoji: '💼', color: '#B76E79', glow: 'rgba(183,110,121,0.5)', x:  280, y: -80,  delay: 0.1 },
-  { id: 'skills',     label: 'Skills',      emoji: '⚡', color: '#FF85C2', glow: 'rgba(255,133,194,0.5)', x:    0, y: -280, delay: 0.2 },
-  { id: 'education',  label: 'Education',   emoji: '🎓', color: '#FF4FA2', glow: 'rgba(255,79,162,0.5)',   x: -220, y:  160, delay: 0.3 },
-  { id: 'contact',    label: 'Contact',     emoji: '📡', color: '#B76E79', glow: 'rgba(183,110,121,0.5)', x:  220, y:  160, delay: 0.4 },
+const ORB_DEFS = [
+  { id: 'projects',   emoji: '🚀', color: '#FF4FA2', glow: 'rgba(255,79,162,0.5)',   x: -280, y: -80,  delay: 0   },
+  { id: 'experience', emoji: '💼', color: '#B76E79', glow: 'rgba(183,110,121,0.5)', x:  280, y: -80,  delay: 0.1 },
+  { id: 'skills',     emoji: '⚡', color: '#FF85C2', glow: 'rgba(255,133,194,0.5)', x:    0, y: -280, delay: 0.2 },
+  { id: 'education',  emoji: '🎓', color: '#FF4FA2', glow: 'rgba(255,79,162,0.5)',   x: -220, y:  160, delay: 0.3 },
+  { id: 'contact',    emoji: '📡', color: '#B76E79', glow: 'rgba(183,110,121,0.5)', x:  220, y:  160, delay: 0.4 },
 ]
-
-export { ORBS }
 
 interface Props {
   activePanel: string | null
   onSelect: (id: string | null) => void
-  mobile?: boolean
 }
 
-function OrbButton({ orb, active, onSelect, size = 'md' }: {
-  orb: typeof ORBS[0]
+function OrbButton({ orb, label, active, onSelect, size = 'md' }: {
+  orb: typeof ORB_DEFS[0]
+  label: string
   active: boolean
   onSelect: () => void
   size?: 'sm' | 'md'
@@ -47,24 +46,34 @@ function OrbButton({ orb, active, onSelect, size = 'md' }: {
         <div className="absolute top-2 left-3 w-4 h-4 rounded-full bg-white/40 blur-sm" />
       </motion.div>
       <span className="text-xs font-medium tracking-wide" style={{ color: orb.color }}>
-        {orb.label}
+        {label}
       </span>
     </motion.button>
   )
 }
 
 /** Mobile inline grid — place inside flex column, no absolute positioning */
-export function MemoryOrbsMobile({ activePanel, onSelect }: Omit<Props, 'mobile'>) {
+export function MemoryOrbsMobile({ activePanel, onSelect }: Props) {
+  const { t } = useTranslation()
+  const labels: Record<string, string> = {
+    projects: t.orbProjects,
+    experience: t.orbExperience,
+    skills: t.orbSkills,
+    education: t.orbEducation,
+    contact: t.orbContact,
+  }
+
   const handle = (id: string) => onSelect(activePanel === id ? null : id)
-  const ROW1 = [ORBS[0], ORBS[2], ORBS[1]]
-  const ROW2 = [ORBS[3], ORBS[4]]
+  const ROW1 = [ORB_DEFS[0], ORB_DEFS[2], ORB_DEFS[1]]
+  const ROW2 = [ORB_DEFS[3], ORB_DEFS[4]]
+
   return (
     <div className="flex flex-col items-center gap-4 mt-8 mb-4">
       <div className="flex gap-7">
         {ROW1.map((orb, i) => (
           <motion.div key={orb.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.5 + i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}>
-            <OrbButton orb={orb} active={activePanel === orb.id} onSelect={() => handle(orb.id)} size="sm" />
+            <OrbButton orb={orb} label={labels[orb.id]} active={activePanel === orb.id} onSelect={() => handle(orb.id)} size="sm" />
           </motion.div>
         ))}
       </div>
@@ -72,7 +81,7 @@ export function MemoryOrbsMobile({ activePanel, onSelect }: Omit<Props, 'mobile'
         {ROW2.map((orb, i) => (
           <motion.div key={orb.id} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.8 + i * 0.1, type: 'spring', stiffness: 200, damping: 20 }}>
-            <OrbButton orb={orb} active={activePanel === orb.id} onSelect={() => handle(orb.id)} size="sm" />
+            <OrbButton orb={orb} label={labels[orb.id]} active={activePanel === orb.id} onSelect={() => handle(orb.id)} size="sm" />
           </motion.div>
         ))}
       </div>
@@ -82,17 +91,26 @@ export function MemoryOrbsMobile({ activePanel, onSelect }: Omit<Props, 'mobile'
 
 /** Desktop overlay — absolute-positioned orbs orbiting the avatar */
 export function MemoryOrbs({ activePanel, onSelect }: Props) {
+  const { t } = useTranslation()
+  const labels: Record<string, string> = {
+    projects: t.orbProjects,
+    experience: t.orbExperience,
+    skills: t.orbSkills,
+    education: t.orbEducation,
+    contact: t.orbContact,
+  }
+
   const handle = (id: string) => onSelect(activePanel === id ? null : id)
   return (
     <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
-      {ORBS.map((orb) => (
+      {ORB_DEFS.map((orb) => (
         <motion.div key={orb.id} className="absolute pointer-events-auto" style={{ x: orb.x, y: orb.y }}
           initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1.5 + orb.delay, type: 'spring', stiffness: 200, damping: 20 }}>
           <motion.div
             animate={{ y: [0, -12, 0], rotate: [0, 3, -3, 0] }}
             transition={{ duration: 4 + orb.delay * 2, repeat: Infinity, ease: 'easeInOut', delay: orb.delay }}>
-            <OrbButton orb={orb} active={activePanel === orb.id} onSelect={() => handle(orb.id)} />
+            <OrbButton orb={orb} label={labels[orb.id]} active={activePanel === orb.id} onSelect={() => handle(orb.id)} />
           </motion.div>
         </motion.div>
       ))}

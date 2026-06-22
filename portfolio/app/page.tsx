@@ -11,6 +11,8 @@ import { ExperiencePanel } from '@/components/panels/ExperiencePanel'
 import { SkillsPanel } from '@/components/panels/SkillsPanel'
 import { EducationPanel } from '@/components/panels/EducationPanel'
 import { ContactPanel } from '@/components/panels/ContactPanel'
+import { useTranslation } from '@/contexts/LanguageContext'
+import type { Lang } from '@/lib/translations'
 
 const ParticleField = dynamic(
   () => import('@/components/ParticleField').then(m => ({ default: m.ParticleField })),
@@ -29,10 +31,17 @@ const PANELS: Record<string, React.FC> = {
   contact: ContactPanel,
 }
 
+const LANG_OPTIONS: { code: Lang; label: string }[] = [
+  { code: 'en', label: 'EN' },
+  { code: 'fr', label: 'FR' },
+  { code: 'ar', label: 'ع' },
+]
+
 function LoadingScreen({ onDone }: { onDone: () => void }) {
+  const { t } = useTranslation()
   useEffect(() => {
-    const t = setTimeout(onDone, 2400)
-    return () => clearTimeout(t)
+    const timer = setTimeout(onDone, 2400)
+    return () => clearTimeout(timer)
   }, [onDone])
 
   return (
@@ -42,7 +51,6 @@ function LoadingScreen({ onDone }: { onDone: () => void }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: 'easeInOut' }}
     >
-      {/* Animated rings */}
       {[80, 140, 200].map((size, i) => (
         <motion.div
           key={i}
@@ -79,7 +87,7 @@ function LoadingScreen({ onDone }: { onDone: () => void }) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          Entering the digital universe...
+          {t.loadingSubtitle}
         </motion.p>
 
         <motion.div
@@ -107,6 +115,7 @@ export default function Home() {
   const [activePanel, setActivePanel] = useState<string | null>(null)
   const [chatOpen, setChatOpen] = useState(false)
   const [speaking, setSpeaking] = useState(false)
+  const { t, lang, setLang, isRTL } = useTranslation()
 
   const ActivePanel = activePanel ? PANELS[activePanel] : null
 
@@ -116,13 +125,9 @@ export default function Home() {
         {!loaded && <LoadingScreen onDone={() => setLoaded(true)} />}
       </AnimatePresence>
 
-      {/* Particle background */}
       <ParticleField />
-
-      {/* Custom cursor */}
       <CursorGlow />
 
-      {/* Main canvas */}
       <main className="relative min-h-screen flex flex-col overflow-hidden">
 
         {/* Background gradients */}
@@ -141,10 +146,27 @@ export default function Home() {
         >
           <div>
             <p className="font-display text-lg font-medium text-[#2D1B2E]">Rayane Toumi</p>
-            <p className="text-xs text-[#B76E79] -mt-0.5">AI · ENSIA · Algiers</p>
+            <p className="text-xs text-[#B76E79] -mt-0.5">{t.headerSubtitle}</p>
           </div>
 
-          <nav className="flex items-center gap-1 md:gap-3">
+          <nav className="flex items-center gap-1 md:gap-2">
+            {/* Language switcher */}
+            <div className="flex items-center gap-0.5 mr-1 md:mr-2">
+              {LANG_OPTIONS.map(({ code, label }) => (
+                <button
+                  key={code}
+                  onClick={() => setLang(code)}
+                  className="text-xs px-2 py-1 rounded-full transition-all font-medium"
+                  style={lang === code
+                    ? { background: 'linear-gradient(135deg, #FF4FA2, #FF85C2)', color: 'white' }
+                    : { color: '#B76E79' }
+                  }
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
             <a
               href="https://github.com/rayaaneeee"
               target="_blank"
@@ -183,12 +205,13 @@ export default function Home() {
                 boxShadow: '0 4px 16px rgba(255,79,162,0.3)',
               }}
             >
-              <span className="hidden sm:inline">Talk to </span>AI Rayane
+              <span className="hidden sm:inline">{t.talkButton}</span>
+              <span className="sm:hidden">{t.talkButtonShort}</span>
             </motion.button>
           </nav>
         </motion.header>
 
-        {/* Hero stage — center */}
+        {/* Hero stage */}
         <div className="relative flex-1 flex items-center justify-center min-h-screen">
 
           {/* Memory orbs — desktop overlay only */}
@@ -229,10 +252,10 @@ export default function Home() {
                 Rayane Toumi
               </h1>
               <p className="text-[#B76E79] font-light tracking-wide">
-                AI & Software Engineering · ENSIA · Algiers
+                {t.heroTagline}
               </p>
               <p className="text-sm text-[#B76E79]/70 mt-1">
-                ML · Full-Stack · Cybersecurity · 12+ projects
+                {t.heroSub}
               </p>
             </motion.div>
 
@@ -244,12 +267,12 @@ export default function Home() {
 
           {/* Orb hint */}
           <motion.p
-            className="absolute bottom-16 left-1/2 -translate-x-1/2 text-xs text-[#B76E79]/50 tracking-widest"
+            className="absolute bottom-16 left-1/2 -translate-x-1/2 text-xs text-[#B76E79]/50 tracking-widest whitespace-nowrap"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 4 }}
           >
-            ✦ click the orbs to explore ✦
+            {t.orbHint}
           </motion.p>
         </div>
 
@@ -257,7 +280,6 @@ export default function Home() {
         <AnimatePresence>
           {ActivePanel && (
             <>
-              {/* Backdrop */}
               <motion.div
                 className="fixed inset-0 z-30"
                 style={{ background: 'rgba(255,200,220,0.12)', backdropFilter: 'blur(4px)' }}
@@ -267,9 +289,9 @@ export default function Home() {
                 onClick={() => setActivePanel(null)}
               />
 
-              {/* Panel — bottom sheet on mobile, left drawer on desktop */}
+              {/* Panel — bottom sheet on mobile, side drawer on desktop */}
               <motion.div
-                className="fixed inset-x-0 bottom-0 top-[15vh] z-40 rounded-t-3xl md:inset-x-auto md:bottom-6 md:left-6 md:top-20 md:w-96 md:rounded-3xl overflow-hidden"
+                className={`fixed inset-x-0 bottom-0 top-[15vh] z-40 rounded-t-3xl md:inset-x-auto md:bottom-6 md:top-20 md:w-96 md:rounded-3xl overflow-hidden ${isRTL ? 'md:right-6' : 'md:left-6'}`}
                 style={{
                   background: 'rgba(255,255,255,0.88)',
                   backdropFilter: 'blur(40px)',
@@ -290,7 +312,7 @@ export default function Home() {
                 <button
                   data-hover="true"
                   onClick={() => setActivePanel(null)}
-                  className="absolute top-3 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center text-[#B76E79] hover:bg-[#FF4FA2]/10 transition-colors text-sm"
+                  className={`absolute top-3 ${isRTL ? 'left-4' : 'right-4'} z-10 w-8 h-8 rounded-full flex items-center justify-center text-[#B76E79] hover:bg-[#FF4FA2]/10 transition-colors text-sm`}
                 >
                   ✕
                 </button>
@@ -314,7 +336,7 @@ export default function Home() {
         </AnimatePresence>
       </main>
 
-      {/* Stats ribbon — bottom of page */}
+      {/* Stats ribbon */}
       <motion.div
         className="fixed bottom-0 left-0 right-0 z-20 flex justify-center gap-4 md:gap-8 px-4 md:px-8 py-3 md:py-4 pointer-events-none"
         initial={{ opacity: 0 }}
@@ -322,10 +344,10 @@ export default function Home() {
         transition={{ delay: 3.5 }}
       >
         {[
-          { n: '12+', label: 'Projects' },
+          { n: '12+', label: t.statProjects },
           { n: '0.963', label: 'AUC-ROC' },
-          { n: '3', label: 'Internships' },
-          { n: '4th', label: 'Year @ ENSIA' },
+          { n: '3', label: t.statInternships },
+          { n: '4th', label: t.statYear },
         ].map(({ n, label }) => (
           <div key={label} className="text-center">
             <p className="text-sm font-bold" style={{ color: '#FF4FA2' }}>{n}</p>

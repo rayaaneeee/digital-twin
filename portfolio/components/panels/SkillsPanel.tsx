@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { useTranslation } from '@/contexts/LanguageContext'
 
 const SKILL_GROUPS = [
   {
@@ -84,13 +85,14 @@ const SKILL_GROUPS = [
 
 export function SkillsPanel() {
   const [active, setActive] = useState(0)
+  const { t } = useTranslation()
   const group = SKILL_GROUPS[active]
 
   return (
     <div className="h-full flex flex-col">
       <div className="px-2 mb-4">
-        <h2 className="font-display text-3xl font-light text-[#2D1B2E] mb-1">Skills</h2>
-        <p className="text-sm text-[#B76E79]">50+ technologies across 5 domains</p>
+        <h2 className="font-display text-3xl font-light text-[#2D1B2E] mb-1">{t.skillsTitle}</h2>
+        <p className="text-sm text-[#B76E79]">{t.skillsSub}</p>
       </div>
 
       {/* Category tabs */}
@@ -156,9 +158,8 @@ export function SkillsPanel() {
           </motion.div>
         ))}
 
-        {/* Tag cloud */}
         <div className="pt-3">
-          <p className="text-[10px] text-[#B76E79] mb-2 uppercase tracking-wider">Also includes</p>
+          <p className="text-[10px] text-[#B76E79] mb-2 uppercase tracking-wider">{t.skillsAlsoIncludes}</p>
           <div className="flex flex-wrap gap-1.5">
             {group.tags.map((tag) => (
               <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-white/70 text-[#4A3040] border border-[#FF4FA2]/15">
@@ -173,9 +174,9 @@ export function SkillsPanel() {
       <div className="px-2 pt-3 mt-2 border-t border-[#FF4FA2]/10">
         <div className="flex gap-2 flex-wrap mb-2">
           {[
-            { lang: 'Arabic', level: 'Native' },
-            { lang: 'French', level: 'Fluent' },
-            { lang: 'English', level: 'Fluent' },
+            { lang: 'Arabic', level: t.langNative },
+            { lang: 'French', level: t.langFluent },
+            { lang: 'English', level: t.langFluent },
           ].map(({ lang, level }) => (
             <span key={lang} className="text-xs px-3 py-1 rounded-full font-medium"
               style={{ background: 'rgba(255,79,162,0.1)', color: '#FF4FA2', border: '1px solid rgba(255,79,162,0.2)' }}>
@@ -184,7 +185,7 @@ export function SkillsPanel() {
           ))}
         </div>
         <div className="flex flex-wrap gap-1.5">
-          {['Team Leadership', 'Agile/Scrum', 'Fast Learner', 'Technical Docs'].map((s) => (
+          {(t.softSkills as string[]).map((s) => (
             <span key={s} className="text-[10px] px-2 py-0.5 rounded-full text-[#B76E79] border border-[#B76E79]/20 bg-white/50">
               {s}
             </span>

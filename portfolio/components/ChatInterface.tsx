@@ -2,19 +2,12 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from '@/contexts/LanguageContext'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
 }
-
-const SUGGESTED = [
-  'Tell me about DermAI',
-  "What's your strongest skill?",
-  'Walk me through your internships',
-  'What are you working on now?',
-  'How did you learn ML?',
-]
 
 interface Props {
   onClose: () => void
@@ -22,11 +15,10 @@ interface Props {
 }
 
 export function ChatInterface({ onClose, onSpeaking }: Props) {
+  const { t } = useTranslation()
+
   const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: "Hi! I'm AI Rayane 👋 I'm a digital twin of Rayane Toumi — ENSIA AI student, ML engineer, and builder of a dozen+ projects. Ask me anything about my work, skills, or story.",
-    },
+    { role: 'assistant', content: t.chatIntro },
   ])
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
@@ -154,7 +146,7 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
             <p className="font-semibold text-sm text-[#2D1B2E]">AI Rayane</p>
             <p className="text-xs text-[#FF4FA2] flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block animate-pulse" />
-              {streaming ? 'thinking...' : 'online'}
+              {streaming ? t.chatThinking : t.chatOnline}
             </p>
           </div>
           <button
@@ -206,7 +198,7 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
         {/* Suggestions */}
         {messages.length <= 1 && (
           <div className="px-4 pb-2 flex gap-2 overflow-x-auto">
-            {SUGGESTED.map((s) => (
+            {(t.chatSuggestions as string[]).map((s) => (
               <button
                 key={s}
                 data-hover="true"
@@ -227,7 +219,7 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && send(input)}
-              placeholder="Ask me anything..."
+              placeholder={t.chatPlaceholder}
               disabled={streaming}
               className="flex-1 text-sm rounded-full px-4 py-2.5 outline-none disabled:opacity-60"
               style={{
@@ -252,8 +244,8 @@ export function ChatInterface({ onClose, onSpeaking }: Props) {
             </motion.button>
           </div>
           <p className="text-center text-[10px] text-[#B76E79]/60 mt-2">
-            Answers from verified context only ·{' '}
-            <a href="mailto:rayanerayane290905@gmail.com" className="underline">email Rayane</a>
+            {t.chatWatermark}{' '}
+            <a href="mailto:rayanerayane290905@gmail.com" className="underline">{t.chatEmailRayane}</a>
           </p>
         </div>
       </div>
