@@ -33,6 +33,7 @@ export const translations = {
     projectFeatured: 'Featured',
     projectDescriptions: [
       'Production skin lesion classifier with Grad-CAM explainability, temperature calibration (ECE 0.030), and MC Dropout uncertainty quantification. EfficientNet-B0 on ISIC 2019 — 7 classes, 22K images, Apple M3 Max.',
+      'Real-time threat intelligence copilot ingesting 7,700+ CVEs (NVD), 697 ATT&CK techniques, 1,627 CISA KEV entries, and EPSS scores. Agentic tool-use loop analyzes your tech stack for vulnerabilities and maps them to attacker techniques via CWE chains.',
       'Chrome Manifest V3 extension with 11 security layers for Gmail phishing detection. Gemini API for AI content analysis + DMARC/DKIM email authentication verification.',
       'ML pipeline classifying DNS traffic as tunneling or legitimate on a 250,000-record dataset. Random Forest, XGBoost, Logistic Regression evaluated with ROC curves and feature-importance analysis.',
       'Built and tuned forecasting and classification models for a competitive Kaggle time series challenge. Achieved 0.96 accuracy through careful feature engineering and model selection.',
@@ -45,6 +46,7 @@ export const translations = {
     ],
     projectTaglines: [
       'Medical AI · AUC-ROC 0.9630',
+      'RAG · Threat Intel · CVE/ATT&CK/KEV · Agentic',
       'AI · Cybersecurity · Chrome Extension',
       'ML · Network Security · 250K dataset',
       'Kaggle Challenge · Time Series · 0.96 Accuracy',
@@ -157,6 +159,7 @@ export const translations = {
     projectFeatured: 'À la une',
     projectDescriptions: [
       "Classificateur de lésions cutanées avec explainabilité Grad-CAM, calibration de température (ECE 0.030) et quantification d'incertitude MC Dropout. EfficientNet-B0 sur ISIC 2019 — 7 classes, 22K images.",
+      "Copilote de threat intelligence en temps réel ingérant 7 700+ CVEs (NVD), 697 techniques ATT&CK, 1 627 entrées CISA KEV et scores EPSS. Boucle agentique analyse votre stack pour les vulnérabilités et les mappe aux techniques d'attaquants via des chaînes CWE.",
       "Extension Chrome Manifest V3 avec 11 couches de sécurité pour la détection de phishing Gmail. Gemini API pour l'analyse IA + vérification d'authentification email DMARC/DKIM.",
       "Pipeline ML classifiant le trafic DNS (tunneling vs légitime) sur 250 000 enregistrements. Random Forest, XGBoost, Régression logistique évalués avec courbes ROC et analyse d'importance.",
       "Modèles de prévision et classification pour un défi Kaggle de séries temporelles multivariées. Précision de 0.96 grâce à l'ingénierie de features et la sélection de modèles.",
@@ -169,6 +172,7 @@ export const translations = {
     ],
     projectTaglines: [
       'IA Médicale · AUC-ROC 0.9630',
+      'RAG · Threat Intel · CVE/ATT&CK/KEV · Agentique',
       'IA · Cybersécurité · Extension Chrome',
       'ML · Sécurité Réseau · 250K données',
       'Kaggle · Séries Temporelles · 0.96 Précision',
@@ -281,6 +285,7 @@ export const translations = {
     projectFeatured: 'مميز',
     projectDescriptions: [
       'مصنف آفات جلدية إنتاجي مع قابلية التفسير Grad-CAM، معايرة درجة الحرارة (ECE 0.030)، وتحديد عدم اليقين MC Dropout. EfficientNet-B0 على ISIC 2019 — 7 فئات، 22K صورة.',
+      'مساعد استخبارات التهديدات في الوقت الفعلي يستوعب +7,700 CVE من NVD و697 تقنية ATT&CK و1,627 إدخال CISA KEV وعلامات EPSS. حلقة وكيلة تحلل مجموعة تقنياتك للثغرات وتربطها بتقنيات المهاجمين عبر سلاسل CWE.',
       'إضافة Chrome Manifest V3 مع 11 طبقة أمان للكشف عن التصيد الاحتيالي في Gmail. Gemini API لتحليل المحتوى بالذكاء الاصطناعي + التحقق من مصادقة البريد DMARC/DKIM.',
       'خط أنابيب ML لتصنيف حركة DNS (نفق مقابل شرعي) على 250,000 سجل. Random Forest وXGBoost والانحدار اللوجستي مع منحنيات ROC وتحليل أهمية الميزات.',
       'نماذج تنبؤ وتصنيف لتحدي Kaggle للسلاسل الزمنية متعددة المتغيرات. تحقيق دقة 0.96 عبر هندسة الميزات واختيار النماذج.',
@@ -293,6 +298,7 @@ export const translations = {
     ],
     projectTaglines: [
       'ذكاء اصطناعي طبي · AUC-ROC 0.9630',
+      'RAG · استخبارات التهديدات · CVE/ATT&CK/KEV',
       'ذكاء اصطناعي · الأمن السيبراني · إضافة Chrome',
       'ML · أمن الشبكات · 250K بيانات',
       'Kaggle · سلاسل زمنية · دقة 0.96',

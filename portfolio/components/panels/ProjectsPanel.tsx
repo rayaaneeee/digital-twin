@@ -16,6 +16,16 @@ const PROJECTS = [
     featured: true,
   },
   {
+    id: 'threat-intel',
+    name: 'Threat Intelligence Copilot',
+    emoji: '🛡️',
+    tech: ['Vue 3', 'FastAPI', 'ChromaDB', 'Groq', 'SQLite', 'NVD', 'MITRE ATT&CK', 'CISA KEV'],
+    metrics: [{ label: 'CVEs', value: '7.7K+' }, { label: 'ATT&CK', value: '697' }, { label: 'KEV', value: '1,627' }],
+    link: 'https://github.com/rayaaneeee/threat-intelligence-copilot',
+    color: '#00FF94',
+    featured: true,
+  },
+  {
     id: 'phishing',
     name: 'Phishing Shield',
     emoji: '🛡️',

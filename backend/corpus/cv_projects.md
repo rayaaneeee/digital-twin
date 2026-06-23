@@ -7,6 +7,14 @@ Rayane a construit plus de 12 projets couvrant l'IA, la cybersécurité, le dév
 
 ## AI & Data Science Projects — مشاريع الذكاء الاصطناعي وعلوم البيانات
 
+### Threat Intelligence RAG Copilot — استخبارات التهديدات بتقنية RAG
+Real-time AI threat intelligence assistant ingesting 4 live security databases.
+- GitHub: https://github.com/rayaaneeee/threat-intelligence-copilot
+- Live: https://rytaaaaaaa-threat-intelligence-copilot.hf.space
+- Data sources: NVD (7,700+ CVEs), MITRE ATT&CK (697 techniques), CISA KEV (1,627 exploited), EPSS scores
+- Features: Analyst Chat (RAG + Groq streaming), Stack Analyzer (agentic tool-use loop), Live Dashboard (ApexCharts)
+- Tech: Vue 3, FastAPI, ChromaDB, SQLite knowledge graph, Groq llama-3.3-70b, Docker
+
 ### DermAI — Medical Imaging with Explainability
 Production-quality skin lesion classification with Grad-CAM heatmaps, confidence calibration, and uncertainty quantification.
 - EfficientNet-B0 fine-tuned on ISIC 2019 dataset, achieving AUC-ROC 0.9630 across 7 classes.
