@@ -11,7 +11,7 @@ import chromadb
 
 CHROMA_DIR = Path(__file__).parent / "chroma_db"
 COLLECTION_NAME = "rayane_twin"
-TOP_K = 6
+TOP_K = 8
 
 
 EMBED_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
